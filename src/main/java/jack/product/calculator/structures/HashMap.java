@@ -4,7 +4,7 @@ import java.util.Optional;
 import java.util.StringJoiner;
 import java.util.function.Consumer;
 
-public class StringHashMap<V> {
+public class HashMap<V> {
     private static final String KEY_VALUE_PAIR_PATTERN = "'%s' = %s";
     private static final int DEFAULT_INITIAL_SIZE = 16;
 
@@ -14,11 +14,11 @@ public class StringHashMap<V> {
 
     private Entry<V>[] valuesStore;
 
-    public StringHashMap() {
+    public HashMap() {
         this(DEFAULT_INITIAL_SIZE);
     }
 
-    public StringHashMap(int initialSize) {
+    public HashMap(int initialSize) {
         this.valuesStore = new Entry[initialSize];
         this.storeSize = initialSize;
     }
@@ -104,7 +104,7 @@ public class StringHashMap<V> {
 
     private void resize() {
         int newStoreSize = storeSize * 2;
-        StringHashMap<V> newHashMap = new StringHashMap<>(newStoreSize);
+        HashMap<V> newHashMap = new HashMap<>(newStoreSize);
 
         forEach(entry -> newHashMap.put(entry.getKey(), entry.getValue()));
 

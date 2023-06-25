@@ -5,12 +5,12 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class StringHashMapTest {
-    private StringHashMap<Integer> underTest;
+class HashMapTest {
+    private HashMap<Integer> underTest;
 
     @BeforeEach
     void beforeEach() {
-        underTest = new StringHashMap<>();
+        underTest = new HashMap<>();
     }
 
     @Test
@@ -47,7 +47,7 @@ class StringHashMapTest {
 
     @Test
     void givenValuesWithClashingHashes_shouldBeAbleToAddAndGetValues() {
-        underTest = new StringHashMap<>(1);
+        underTest = new HashMap<>(1);
         underTest.setResizingEnabled(false);
 
         underTest.put("key1", 1);
@@ -59,7 +59,7 @@ class StringHashMapTest {
 
     @Test
     void givenHashMap_whenAddingValuesWithClashingIndexesOrKeys_shouldCalculateCorrectSize() {
-        underTest = new StringHashMap<>(1);
+        underTest = new HashMap<>(1);
         underTest.setResizingEnabled(false);
 
         underTest.put("key1", 1);
@@ -71,7 +71,7 @@ class StringHashMapTest {
 
     @Test
     void givenHashMapFullnessIsHigh_shouldAutoDoubleSize() {
-        underTest = new StringHashMap<>(2);
+        underTest = new HashMap<>(2);
 
         underTest.put("key1", 1);
         underTest.put("key2", 2);
@@ -85,7 +85,7 @@ class StringHashMapTest {
 
     @Test
     void givenHashMapHasResized_shouldNotLoseEntries() {
-        underTest = new StringHashMap<>(1);
+        underTest = new HashMap<>(1);
 
         underTest.put("key1", 1);
         underTest.put("key2", 2);
