@@ -1,0 +1,29 @@
+@startuml
+skinparam defaultTextAlignment center
+
+start
+
+:calculate index
+from key|
+
+switch (does internal array contain\nany value at index)
+case (no or empty list)
+  :return empty
+  optional;
+case (yes)
+  repeat
+    if (does element name\nequal key) then (yes)
+      :return element
+      value;
+      stop
+    endif
+  repeat while (are there any\nelements left?) is (yes)
+  ->no;
+
+  :return empty
+  optional;
+endswitch
+
+stop
+
+@enduml

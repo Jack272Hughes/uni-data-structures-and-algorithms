@@ -1,0 +1,48 @@
+@startuml
+skinparam defaultTextAlignment center
+
+start
+
+:set fullness to size + 1
+divide by max size;
+
+if (fullness is >=
+0.75) then (yes)
+  :create new hashmap
+  with double max size;
+
+  :add each entry to
+  new hashmap;
+
+  :set internal array to new
+  hashmaps internal array;
+endif
+
+:calculate index
+from key|
+
+if (does internal array
+contain an entry
+at index) then (yes)
+  if (does any element
+  name match key) then (yes)
+    :replace value with
+    new value;
+  else (no)
+    :create new entry with
+    key and value;
+
+    :append new entry
+    to last entry as next;
+  endif
+else (no)
+  :create new entry with
+  key and value;
+
+  :insert entry at
+  internal array index;
+endif
+
+stop
+
+@enduml

@@ -1,0 +1,41 @@
+@startuml
+
+participant Application
+participant ProductsParser
+participant CostsParser
+participant Resources
+participant ProductCalculator
+
+Application --> ProductsParser: getProducts()
+ProductsParser --> Resources: getProductFiles()
+ProductsParser <-- Resources: return product files
+ProductsParser --> ProductsParser: parseProducts()
+alt successful case
+  Application <-- ProductsParser: return product nodes
+else invalid format (e.g. indentation)
+  Application <-- ProductsParser: throw invalid format exception
+end
+
+Application --> CostsParser: getCosts()
+CostsParser --> Resources: getCostsFile()
+CostsParser <-- Resources: return costs file
+CostsParser --> CostsParser: parseCosts()
+alt successful case
+  Application <-- CostsParser: return costs hashmap
+else invalid format (e.g. negative or non-int cost)
+  Application <-- CostsParser: throw invalid format exception
+end
+
+loop for each product
+  Application --> ProductCalculator: calculateProduct()
+  alt successful case
+    Application <-- ProductCalculator: return cost
+    Application --> Application: add product cost to map
+  else no cost found for last node
+    Application <-- ProductCalculator: throw cost not found exception
+  end
+end
+
+Application --> Application: print product costs
+
+@enduml

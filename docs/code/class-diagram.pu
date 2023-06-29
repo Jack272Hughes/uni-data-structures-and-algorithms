@@ -1,0 +1,71 @@
+@startuml
+
+class Link<V> {
+  +V value
+  +Link<V> next
+  +V value()
+  +Link<V> next()
+}
+
+class HashMap<V> {
+  +Entry<V>[] valueStore
+  +void put(String key, V value)
+  +Optional<V> get(String key)
+  +String toString()
+}
+
+class Entry<V> {
+  +String key
+  +String key()
+}
+
+class LinkedStack<V> {
+  +Link<V> first
+  +void add(V value)
+  +Optional<V> pop()
+  +Optional<V> peek()
+}
+
+class Node {
+  +String name
+  +Node parent
+  +LinkedStack<Node> children
+  +String getName()
+  +Node getParent()
+  +LinkedStack<Node> getChildren()
+}
+
+class ProductsParser {
+  +int indent
+  +Node[] getProducts()
+}
+
+class CostsParser {
+  +HashMap<Integer> getCosts()
+}
+
+class ProductCalculator {
+  +int calculateProduct(Node product)
+}
+
+class Application {
+  +void calculateProductCosts()
+}
+
+HashMap *-- Entry
+LinkedStack *-- Link
+Link <|-left- Entry
+
+ProductsParser *-- Node
+CostsParser *-- HashMap
+ProductCalculator *-- LinkedStack
+LinkedStack -right-* Node
+
+Application *-- ProductsParser
+Application *-- ProductCalculator
+Application *-- CostsParser
+Application *-- HashMap
+
+hide circle
+
+@enduml

@@ -1,0 +1,27 @@
+@startuml
+skinparam defaultTextAlignment center
+
+:calculate index
+from key|
+
+:set index to 0;
+
+repeat
+  :get next character
+  in key;
+
+  :times index by
+  prime number (31);
+
+  :add char code
+  for character to index;
+repeat while(are there remaining\ncharacters in key) is (yes)
+
+:modulo index by
+size of hashmap;
+
+:return index;
+
+stop
+
+@enduml
