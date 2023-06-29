@@ -14,6 +14,12 @@ class LinkedStackTest {
     }
 
     @Test
+    void givenEmptyStack_peekAndPopShouldReturnEmpty() {
+        assertThat(underTest.peek()).isEmpty();
+        assertThat(underTest.pop()).isEmpty();
+    }
+
+    @Test
     void givenEmptyStack_shouldBeAbleToAddPeekAndPopValue() {
         int expected = 5;
         underTest.add(expected);

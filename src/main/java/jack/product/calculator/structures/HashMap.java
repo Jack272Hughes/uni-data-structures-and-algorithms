@@ -24,10 +24,9 @@ public class HashMap<V> {
     }
 
     public void put(String key, V value) {
-        if (shouldResize()) resize();
+        resizeIfNeeded();
 
         int index = calculateKeyIndex(key);
-
         Entry<V> currentEntry = valuesStore[index];
 
         if (currentEntry == null) {
@@ -102,7 +101,9 @@ public class HashMap<V> {
         return resizingEnabled && fullness >= 0.75;
     }
 
-    private void resize() {
+    private void resizeIfNeeded() {
+        if (!shouldResize()) return;
+
         int newStoreSize = storeSize * 2;
         HashMap<V> newHashMap = new HashMap<>(newStoreSize);
 

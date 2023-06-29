@@ -17,20 +17,11 @@ public class Link<T> {
         this.value = value;
     }
 
-    public Link<T> getPrevious() {
-        return previous;
-    }
-
-    private void setPrevious(Link<T> previous) {
-        this.previous = previous;
-    }
-
     public Link<T> getNext() {
         return next;
     }
 
     public void setNext(Link<T> link) {
-        if (link != null) link.setPrevious(this);
         next = link;
     }
 

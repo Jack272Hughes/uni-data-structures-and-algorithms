@@ -9,17 +9,15 @@ public class LinkedStack<T> {
 
     public void add(T value) {
         Link<T> newLink = new Link<>(value);
-        if (top != null) top.setNext(newLink);
+        newLink.setNext(top);
         top = newLink;
     }
 
     public Optional<T> pop() {
-        T returnValue = top.getValue();
-
-        top = top.getPrevious();
-        if (top != null) top.setNext(null);
-
-        return Optional.of(returnValue);
+        return ofNullable(top).stream()
+                .peek(link -> top = link.getNext())
+                .map(Link::getValue)
+                .findFirst();
     }
 
     public Optional<T> peek() {
