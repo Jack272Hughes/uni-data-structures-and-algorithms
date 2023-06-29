@@ -37,7 +37,7 @@ public class HashMap<V> {
 
         Entry<V> previousEntry = currentEntry;
         while (currentEntry != null) {
-            if (currentEntry.getKey().equals(key)) {
+            if (currentEntry.key().equals(key)) {
                 currentEntry.setValue(value);
                 return;
             }
@@ -55,8 +55,8 @@ public class HashMap<V> {
         Entry<V> currentEntry = valuesStore[index];
 
         while (currentEntry != null) {
-            if (currentEntry.getKey().equals(key)) {
-                return Optional.ofNullable(currentEntry.getValue());
+            if (currentEntry.key().equals(key)) {
+                return Optional.ofNullable(currentEntry.value());
             }
             currentEntry = (Entry<V>) currentEntry.next();
         }
@@ -81,7 +81,7 @@ public class HashMap<V> {
         StringJoiner stringJoiner = new StringJoiner(", ", "{ ", " }");
 
         forEach(entry -> stringJoiner
-                .add(String.format(KEY_VALUE_PAIR_PATTERN, entry.getKey(), entry.getValue())));
+                .add(String.format(KEY_VALUE_PAIR_PATTERN, entry.key(), entry.value())));
 
         return stringJoiner.toString();
     }
@@ -107,7 +107,7 @@ public class HashMap<V> {
         int newStoreSize = storeSize * 2;
         HashMap<V> newHashMap = new HashMap<>(newStoreSize);
 
-        forEach(entry -> newHashMap.put(entry.getKey(), entry.getValue()));
+        forEach(entry -> newHashMap.put(entry.key(), entry.value()));
 
         valuesStore = newHashMap.valuesStore;
         storeSize = newStoreSize;
@@ -130,7 +130,7 @@ public class HashMap<V> {
             this.key = key;
         }
 
-        public String getKey() {
+        public String key() {
             return key;
         }
     }

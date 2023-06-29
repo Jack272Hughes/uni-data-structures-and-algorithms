@@ -15,12 +15,12 @@ public class LinkedStack<T> {
 
     public Optional<T> pop() {
         return ofNullable(top).stream()
-                .peek(link -> top = link.getNext())
-                .map(Link::getValue)
+                .peek(link -> top = link.next())
+                .map(Link::value)
                 .findFirst();
     }
 
     public Optional<T> peek() {
-        return ofNullable(top).map(Link::getValue);
+        return ofNullable(top).map(Link::value);
     }
 }
