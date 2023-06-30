@@ -24,24 +24,27 @@ class LinkedStack<V> {
   +void add(V value)
   +Optional<V> pop()
   +Optional<V> peek()
+  +boolean equals(LinkedStack<V>)
 }
 
 class Node {
   +String name
   +Node parent
   +LinkedStack<Node> children
-  +String getName()
-  +Node getParent()
-  +LinkedStack<Node> getChildren()
+  +String name()
+  +Node parent()
+  +LinkedStack<Node> children()
+  +void addChild()
+  +boolean equals(Node)
 }
 
 class ProductsParser {
   +int indent
-  +Node[] getProducts()
+  +Node[] parse(String directory)
 }
 
 class CostsParser {
-  +HashMap<Integer> getCosts()
+  +HashMap<Integer> parse(String file)
 }
 
 class ProductCalculator {

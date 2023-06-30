@@ -6,7 +6,7 @@ participant CostsParser
 participant Resources
 participant ProductCalculator
 
-Application --> ProductsParser: getProducts()
+Application --> ProductsParser: parse(directory)
 ProductsParser --> Resources: getProductFiles()
 ProductsParser <-- Resources: return product files
 ProductsParser --> ProductsParser: parseProducts()
@@ -16,7 +16,7 @@ else invalid format (e.g. indentation)
   Application <-- ProductsParser: throw invalid format exception
 end
 
-Application --> CostsParser: getCosts()
+Application --> CostsParser: parse(file)
 CostsParser --> Resources: getCostsFile()
 CostsParser <-- Resources: return costs file
 CostsParser --> CostsParser: parseCosts()
