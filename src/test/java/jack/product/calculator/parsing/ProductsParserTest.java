@@ -19,8 +19,8 @@ class ProductsParserTest {
     }
 
     @Test
-    void givenSingleFile_parseShouldReturnCorrectlyParsedTree() {
-        Node expectedProduct = new Node("first-product");
+    void givenSingleFile_parseShouldReturnCorrectlyParsedNode() {
+        Node expectedProduct = new Node("product");
         Node[] nodes = createNodes(6);
 
         expectedProduct.addChild(nodes[0]);
@@ -35,7 +35,7 @@ class ProductsParserTest {
     }
 
     @Test
-    void givenMultipleFiles_parseShouldReturnMultipleNodes() {
+    void givenMultipleFiles_parseShouldReturnMultipleParsedNodes() {
         Node firstExpectedProduct = new Node("first-product");
         Node[] nodes = createNodes(4);
         firstExpectedProduct.addChild(nodes[0]);
@@ -50,7 +50,26 @@ class ProductsParserTest {
         nodes[0].addChild(nodes[1]);
 
         Node[] parsedNodes = underTest.parse("/multiple");
-        assertThat(parsedNodes).containsExactly(firstExpectedProduct, secondExpectedProduct);
+        assertThat(parsedNodes).containsExactlyInAnyOrder(firstExpectedProduct, secondExpectedProduct);
+    }
+
+    @Test
+    void givenFileWithExtraSpacing_shouldSkipAndTrimTheseLines() {
+        Node expectedProduct = new Node("product");
+        Node[] nodes = createNodes(4);
+        expectedProduct.addChild(nodes[0]);
+        expectedProduct.addChild(nodes[3]);
+        nodes[0].addChild(nodes[1]);
+        nodes[0].addChild(nodes[2]);
+
+        Node[] parsedNodes = underTest.parse("/spacing");
+        assertThat(parsedNodes).containsExactly(expectedProduct);
+    }
+
+    @Test
+    void givenIncorrectFileExtension_shouldIgnoreFile() {
+        Node[] parsedNodes = underTest.parse("/ignore");
+        assertThat(parsedNodes).isEmpty();
     }
 
     @ParameterizedTest
@@ -62,11 +81,11 @@ class ProductsParserTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"/invalid-indent, 2", "/invalid-start-indent, 1"})
+    @CsvSource({"/spaced-invalid-indent, 3", "/invalid-start-indent, 1"})
     void givenFileWithInvalidIndentation_shouldThrowException(String directory, int expectedLineNumber) {
         assertThatThrownBy(() -> underTest.parse(directory))
                 .isInstanceOf(ParsingException.class)
-                .hasMessage("'" + directory + "/test.txt' has invalid indentation at line " + expectedLineNumber);
+                .hasMessage("'test.txt' has invalid indentation at line " + expectedLineNumber);
     }
 
     private Node[] createNodes(int total) {
