@@ -11,8 +11,8 @@ import java.util.stream.Stream;
 import static java.util.Optional.ofNullable;
 
 public class ProductsParser {
-    private final static String INDENT = "\\s{4}";
-    private final static String EXTENSION = ".txt";
+    private static final String INDENT = "\\s{4}";
+    private static final String EXTENSION = ".txt";
 
     public Node[] parse(String directoryName) {
         // Optionals used because some of these methods can return null values if files don't exist
