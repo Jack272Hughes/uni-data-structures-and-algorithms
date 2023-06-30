@@ -4,9 +4,8 @@ participant Application
 participant ProductsParser
 participant CostsParser
 participant Resources
-participant ProductCalculator
 
-Application --> ProductsParser: parse(directory)
+Application --> ProductsParser: getProducts()
 ProductsParser --> Resources: getProductFiles()
 ProductsParser <-- Resources: return product files
 ProductsParser --> ProductsParser: parseProducts()
@@ -16,7 +15,7 @@ else invalid format (e.g. indentation)
   Application <-- ProductsParser: throw invalid format exception
 end
 
-Application --> CostsParser: parse(file)
+Application --> CostsParser: getCosts()
 CostsParser --> Resources: getCostsFile()
 CostsParser <-- Resources: return costs file
 CostsParser --> CostsParser: parseCosts()
@@ -27,12 +26,11 @@ else invalid format (e.g. negative or non-int cost)
 end
 
 loop for each product
-  Application --> ProductCalculator: calculateProduct()
+  Application --> Application: calculateProduct()
   alt successful case
-    Application <-- ProductCalculator: return cost
     Application --> Application: add product cost to map
   else no cost found for last node
-    Application <-- ProductCalculator: throw cost not found exception
+    Application --> Application: throw cost not found exception
   end
 end
 

@@ -1,0 +1,32 @@
+table-top
+    wood
+table-leg
+    motor
+        steel
+        magnet
+            copper alloy
+    steel
+table-leg
+    motor
+        steel
+        magnet
+            copper alloy
+    steel
+table-leg
+    motor
+        steel
+        magnet
+            copper alloy
+    steel
+table-leg
+    motor
+        steel
+        magnet
+            copper alloy
+    steel
+switch
+    plastic
+    wires
+        copper
+wires
+    copper

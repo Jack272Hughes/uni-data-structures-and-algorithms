@@ -1,0 +1,34 @@
+@startuml
+skinparam defaultTextAlignment center
+
+start
+
+:create linked stack
+containing product node;
+
+:set current total
+to zero;
+
+repeat
+  :get next node
+  from stack;
+
+  if (does costs\nhashmap contain\nnode's name?) then (yes)
+    :add cost to total;
+  else (no)
+    if (node has children) then (yes)
+      :add node children to stack;
+    else (no)
+      :throw undefined
+      cost error;
+      end
+    endif
+  endif
+repeat while (stack is not\nempty) is (yes)
+->no;
+
+:return total;
+
+stop
+
+@enduml

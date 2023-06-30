@@ -1,0 +1,38 @@
+motherboard
+    CPU
+        microchip
+            silicon
+            copper
+            capacitor
+        copper
+    RAM
+        transistor
+        capacitor
+    GPU
+        microchip
+            silicon
+            copper
+            capacitor
+        transistor
+        capacitor
+
+power supply
+    fan
+        plastic
+    capacitor
+    aluminium
+
+solid state storage
+    plastic
+    microchip
+        silicon
+        copper
+        capacitor
+
+case
+    fan
+        plastic
+    fan
+        plastic
+    plastic
+    glass

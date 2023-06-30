@@ -1,0 +1,10 @@
+wood = 1000
+steel = 10000
+copper alloy = 5000
+plastic = 2000
+copper = 1500
+silicon = 3500
+capacitor = 500
+transistor = 500
+glass = 2000
+aluminium = 2250
