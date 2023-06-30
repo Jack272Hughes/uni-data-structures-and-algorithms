@@ -50,4 +50,39 @@ class LinkedStackTest {
 
         assertThat(underTest.peek()).isEmpty();
     }
+
+    @Test
+    void givenTwoIdenticalStacks_equalsShouldReturnTrue() {
+        LinkedStack<Integer> identicalStack = new LinkedStack<>();
+        identicalStack.add(1);
+        identicalStack.add(2);
+
+        underTest.add(1);
+        underTest.add(2);
+
+        assertThat(underTest.equals(identicalStack)).isTrue();
+    }
+
+    @Test
+    void givenTwoDifferentStacks_equalsShouldReturnFalse() {
+        LinkedStack<Integer> differentStack = new LinkedStack<>();
+        differentStack.add(1);
+        differentStack.add(2);
+
+        underTest.add(3);
+        underTest.add(4);
+
+        assertThat(underTest.equals(differentStack)).isFalse();
+    }
+
+    @Test
+    void givenTwoStacksOfDifferentLengths_equalsShouldReturnFalse() {
+        LinkedStack<Integer> differentStack = new LinkedStack<>();
+        differentStack.add(1);
+
+        underTest.add(2);
+        underTest.add(1);
+
+        assertThat(underTest.equals(differentStack)).isFalse();
+    }
 }

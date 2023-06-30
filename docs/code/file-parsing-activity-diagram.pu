@@ -1,0 +1,44 @@
+@startuml
+skinparam defaultTextAlignment center
+
+start
+
+:Create node from
+product file name
+and set as currentNode;
+
+:Set indent to 0;
+
+repeat
+  :read next line
+  in product file;
+
+  if (is end of file) then (yes)
+    :return product
+    node;
+    stop
+  endif
+
+  if (is line indentation\none more than indent) then (yes)
+      :increment indent;
+
+      :set currentNode
+      as most recent child;
+  elseif (is line indentation\nless than indent) then (yes)
+      repeat
+        :decrement indent;
+
+        :set currentNode as
+        currentNode's parent;
+      repeat while (is indent equal\nto indentation) is (no)
+      ->yes;
+  elseif (invalid line indentation) then (yes)
+    :throw error;
+    end
+  endif
+
+  :create node from line and
+  add as child to currentNode;
+repeat while
+
+@enduml
