@@ -1,5 +1,6 @@
 package jack.product.calculator.structures;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.StringJoiner;
 import java.util.function.Consumer;
@@ -120,6 +121,26 @@ public class HashMap<V> {
                 entry = (Entry<V>) entry.next();
             }
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        HashMap<?> hashMap = (HashMap<?>) o;
+        if (size != hashMap.size) return false;
+
+        for (Entry<V> entry : valuesStore) {
+            while (entry != null) {
+                Optional<?> otherEntry = hashMap.get(entry.key());
+                if (otherEntry.isEmpty() || !Objects.equals(entry.value(), otherEntry.get())) {
+                    return false;
+                }
+                entry = (Entry<V>) entry.next();
+            }
+        }
+
+        return true;
     }
 
     public static class Entry<V> extends Link<V> {

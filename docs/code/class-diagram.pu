@@ -12,6 +12,7 @@ class HashMap<V> {
   +void put(String key, V value)
   +Optional<V> get(String key)
   +String toString()
+  +boolean equals(HashMap)
 }
 
 class Entry<V> {
@@ -21,9 +22,12 @@ class Entry<V> {
 
 class LinkedStack<V> {
   +Link<V> first
+  +int size
   +void add(V value)
   +Optional<V> pop()
   +Optional<V> peek()
+  +int size()
+  +boolean isEmpty()
   +boolean equals(LinkedStack<V>)
 }
 

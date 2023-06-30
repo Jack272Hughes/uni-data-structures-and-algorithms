@@ -106,4 +106,51 @@ class HashMapTest {
 
         assertThat(underTest.toString()).isEqualTo(expectedString);
     }
+
+    @Test
+    void givenTwoSimilarHashMaps_equalsShouldReturnTrue() {
+        HashMap<Integer> identicalMap = new HashMap<>();
+        identicalMap.put("key1", 1);
+        identicalMap.put("key2", 2);
+
+        underTest.put("key1", 1);
+        underTest.put("key2", 2);
+
+        assertThat(underTest.equals(identicalMap)).isTrue();
+    }
+
+    @Test
+    void givenTwoDifferentHashMaps_equalsShouldReturnFalse() {
+        HashMap<Integer> differentMap = new HashMap<>();
+        differentMap.put("key1", 1);
+        differentMap.put("key2", 2);
+
+        underTest.put("key3", 3);
+        underTest.put("key2", 2);
+
+        assertThat(underTest.equals(differentMap)).isFalse();
+    }
+
+    @Test
+    void givenTwoSimilarHashMapsOfDifferentInitialSizes_equalsShouldReturnTrue() {
+        HashMap<Integer> identicalMap = new HashMap<>(128);
+        identicalMap.put("key1", 1);
+        identicalMap.put("key2", 2);
+
+        underTest.put("key1", 1);
+        underTest.put("key2", 2);
+
+        assertThat(underTest.equals(identicalMap)).isTrue();
+    }
+
+    @Test
+    void givenTwoHashMapsWithDifferentSizes_equalsShouldReturnFalse() {
+        HashMap<Integer> differentMap = new HashMap<>();
+        differentMap.put("key1", 1);
+
+        underTest.put("key1", 1);
+        underTest.put("key2", 2);
+
+        assertThat(underTest.equals(differentMap)).isFalse();
+    }
 }
