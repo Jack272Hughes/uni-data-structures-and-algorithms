@@ -94,7 +94,7 @@ public class HashMap<V> {
             index += key.codePointAt(i);
         }
 
-        return index % storeSize;
+        return Math.abs(index % storeSize);
     }
 
     private boolean shouldResize() {

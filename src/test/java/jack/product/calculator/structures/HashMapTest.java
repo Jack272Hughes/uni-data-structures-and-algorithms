@@ -24,6 +24,15 @@ class HashMapTest {
     }
 
     @Test
+    void givenEmptyHashMap_shouldBeAbleToAddAndGetValueWithLargeKey() {
+        String key = "extremely, potentially unnecessarily, large key";
+        int expected = 5;
+
+        underTest.put(key, expected);
+        assertThat(underTest.get(key)).hasValue(5);
+    }
+
+    @Test
     void givenHashMapWithValue_shouldReplaceValueWithSameKey() {
         String key = "key";
         int expected = 5;
