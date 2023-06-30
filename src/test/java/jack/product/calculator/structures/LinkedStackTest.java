@@ -52,6 +52,17 @@ class LinkedStackTest {
     }
 
     @Test
+    void givenStackWithValues_shouldBeAbleToAddAllValuesToOtherStack() {
+        LinkedStack<Integer> otherStack = new LinkedStack<>();
+        otherStack.add(1);
+        otherStack.add(2);
+
+        underTest.addAll(otherStack);
+        assertThat(underTest.pop()).hasValue(1);
+        assertThat(underTest.pop()).hasValue(2);
+    }
+
+    @Test
     void givenStackWithValues_sizeShouldReturnCorrectSize() {
         underTest.add(1);
         underTest.add(2);

@@ -16,6 +16,14 @@ public class LinkedStack<T> {
         size++;
     }
 
+    public void addAll(LinkedStack<T> otherStack) {
+        Link<T> otherTop = otherStack.top;
+        while (otherTop != null) {
+            add(otherTop.value());
+            otherTop = otherTop.next();
+        }
+    }
+
     public Optional<T> pop() {
         return ofNullable(top).stream()
                 .peek(link -> {
