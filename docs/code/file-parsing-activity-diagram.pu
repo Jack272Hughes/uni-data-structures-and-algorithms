@@ -20,6 +20,11 @@ repeat
   endif
 
   if (is line indentation\none more than indent) then (yes)
+      if (does currentNode have\nat least one child) then (no)
+        :throw error;
+        end
+      endif
+      ->yes;
       :increment indent;
 
       :set currentNode
