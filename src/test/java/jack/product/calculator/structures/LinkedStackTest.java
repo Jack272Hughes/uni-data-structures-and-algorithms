@@ -63,6 +63,13 @@ class LinkedStackTest {
     }
 
     @Test
+    void givenEmptyStack_addAllShouldNotDoAnything() {
+        LinkedStack<Integer> otherStack = new LinkedStack<>();
+        underTest.addAll(otherStack);
+        assertThat(underTest.isEmpty()).isTrue();
+    }
+
+    @Test
     void givenStackWithValues_sizeShouldReturnCorrectSize() {
         underTest.add(1);
         underTest.add(2);
