@@ -1,4 +1,4 @@
-package jack.product.calculator.parsing;
+package jack.product.calculator.exceptions;
 
 public class ParsingException extends RuntimeException {
     public ParsingException(String message) {

@@ -1,5 +1,6 @@
 package jack.product.calculator.parsing;
 
+import jack.product.calculator.exceptions.ParsingException;
 import jack.product.calculator.structures.Node;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

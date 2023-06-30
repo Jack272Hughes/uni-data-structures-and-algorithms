@@ -1,5 +1,6 @@
 package jack.product.calculator.parsing;
 
+import jack.product.calculator.exceptions.ParsingException;
 import jack.product.calculator.structures.HashMap;
 
 import java.io.BufferedReader;
