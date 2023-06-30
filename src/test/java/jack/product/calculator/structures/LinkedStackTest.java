@@ -52,6 +52,26 @@ class LinkedStackTest {
     }
 
     @Test
+    void givenStackWithValues_sizeShouldReturnCorrectSize() {
+        underTest.add(1);
+        underTest.add(2);
+        underTest.add(3);
+        underTest.pop();
+        assertThat(underTest.size()).isEqualTo(2);
+    }
+
+    @Test
+    void givenEmptyStack_isEmptyShouldReturnTrue() {
+        assertThat(underTest.isEmpty()).isTrue();
+    }
+
+    @Test
+    void givenStackWithValues_isEmptyShouldReturnFalse() {
+        underTest.add(1);
+        assertThat(underTest.isEmpty()).isFalse();
+    }
+
+    @Test
     void givenTwoIdenticalStacks_equalsShouldReturnTrue() {
         LinkedStack<Integer> identicalStack = new LinkedStack<>();
         identicalStack.add(1);
