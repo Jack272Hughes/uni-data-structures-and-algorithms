@@ -35,8 +35,8 @@ repeat
 
         :set currentNode as
         currentNode's parent;
-      repeat while (is indent equal\nto indentation) is (no)
-      ->yes;
+      repeat while (is indentation still\nless than indent) is (yes)
+      ->no;
   elseif (invalid line indentation) then (yes)
     :throw error;
     end

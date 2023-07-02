@@ -12,7 +12,6 @@ class HashMap<V> {
   +void put(String key, V value)
   +Optional<V> get(String key)
   +String toString()
-  +boolean equals(HashMap)
 }
 
 class Entry<V> {
@@ -21,14 +20,13 @@ class Entry<V> {
 }
 
 class LinkedStack<V> {
-  +Link<V> first
+  +Link<V> top
   +int size
   +void add(V value)
+  +void addAll(LinkedStack<V>)
   +Optional<V> pop()
   +Optional<V> peek()
-  +int size()
   +boolean isEmpty()
-  +boolean equals(LinkedStack<V>)
 }
 
 class Node {
@@ -38,8 +36,7 @@ class Node {
   +String name()
   +Node parent()
   +LinkedStack<Node> children()
-  +void addChild()
-  +boolean equals(Node)
+  +void addChild(Node child)
 }
 
 class ProductsParser {
@@ -48,15 +45,14 @@ class ProductsParser {
 }
 
 class CostsParser {
-  +HashMap<Integer> parse(String file)
-}
-
-class ProductCalculator {
-  +int calculateProduct(Node product)
+  +HashMap<int> parse(String file)
 }
 
 class Application {
-  +void calculateProductCosts()
+  +ProductsParser productsParser
+  +CostsParser costsParser
+  +HashMap<int> calculateProductCosts(productsDirectory, costsFile)
+  +int calculateProduct(Node product)
 }
 
 HashMap *-- Entry
@@ -65,11 +61,10 @@ Link <|-left- Entry
 
 ProductsParser *-- Node
 CostsParser *-- HashMap
-ProductCalculator *-- LinkedStack
+Application *-- LinkedStack
 LinkedStack -right-* Node
 
 Application *-- ProductsParser
-Application *-- ProductCalculator
 Application *-- CostsParser
 Application *-- HashMap
 

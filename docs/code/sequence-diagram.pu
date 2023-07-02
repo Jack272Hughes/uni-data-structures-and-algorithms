@@ -5,17 +5,21 @@ participant ProductsParser
 participant CostsParser
 participant Resources
 
-Application --> ProductsParser: getProducts()
+Application --> ProductsParser: parse(products directory)
 ProductsParser --> Resources: getProductFiles()
 ProductsParser <-- Resources: return product files
-ProductsParser --> ProductsParser: parseProducts()
-alt successful case
-  Application <-- ProductsParser: return product nodes
-else invalid format (e.g. indentation)
-  Application <-- ProductsParser: throw invalid format exception
+loop for each file
+  ProductsParser --> ProductsParser: parseProducts()
+  alt successful case
+    ProductsParser --> ProductsParser: add to product nodes array
+  else invalid format (e.g. indentation)
+    ProductsParser --> ProductsParser: throw invalid format exception
+  end
 end
 
-Application --> CostsParser: getCosts()
+Application <-- ProductsParser: return product nodes array
+
+Application --> CostsParser: parse(costs file)
 CostsParser --> Resources: getCostsFile()
 CostsParser <-- Resources: return costs file
 CostsParser --> CostsParser: parseCosts()
@@ -34,6 +38,6 @@ loop for each product
   end
 end
 
-Application --> Application: print product costs
+Application --> Application: print product costs map
 
 @enduml
