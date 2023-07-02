@@ -15,6 +15,15 @@ There has been some example data provided inside the [data folder](data). If you
 java -jar ../application.jar products costs.txt
 ```
 
+### Tests
+This using gradle as its build tool which comes wrapper script for executing gradle commands.
+The file is `./gradlew` for linux/mac and `./gradlew.bat` for windows. This will download the gradle jar and execute any tasks you want.
+
+To run the tests you will just need to run the following command and an HTML report will be created (at /build/reports/tests/test/index.html) that can be opened in a web browser.
+```
+./gradlew test
+```
+
 ## Data structure
 ### Products
 The first argument of the program is a directory to the product files.
