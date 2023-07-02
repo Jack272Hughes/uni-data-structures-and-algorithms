@@ -69,11 +69,11 @@ public class HashMap<V> {
         this.resizingEnabled = resizingEnabled;
     }
 
-    public int getSize() {
+    public int size() {
         return size;
     }
 
-    public int getStoreSize() {
+    public int storeSize() {
         return storeSize;
     }
 
@@ -85,6 +85,26 @@ public class HashMap<V> {
                 .add(String.format(KEY_VALUE_PAIR_PATTERN, entry.key(), entry.value())));
 
         return stringJoiner.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        HashMap<?> hashMap = (HashMap<?>) o;
+        if (size != hashMap.size) return false;
+
+        for (Entry<V> entry : valuesStore) {
+            while (entry != null) {
+                Optional<?> otherEntry = hashMap.get(entry.key());
+                if (otherEntry.isEmpty() || !Objects.equals(entry.value(), otherEntry.get())) {
+                    return false;
+                }
+                entry = (Entry<V>) entry.next();
+            }
+        }
+
+        return true;
     }
 
     private int calculateKeyIndex(String key) {
@@ -121,26 +141,6 @@ public class HashMap<V> {
                 entry = (Entry<V>) entry.next();
             }
         }
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        HashMap<?> hashMap = (HashMap<?>) o;
-        if (size != hashMap.size) return false;
-
-        for (Entry<V> entry : valuesStore) {
-            while (entry != null) {
-                Optional<?> otherEntry = hashMap.get(entry.key());
-                if (otherEntry.isEmpty() || !Objects.equals(entry.value(), otherEntry.get())) {
-                    return false;
-                }
-                entry = (Entry<V>) entry.next();
-            }
-        }
-
-        return true;
     }
 
     public static class Entry<V> extends Link<V> {

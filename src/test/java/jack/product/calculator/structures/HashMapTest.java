@@ -75,7 +75,7 @@ class HashMapTest {
         underTest.put("key2", 2);
         underTest.put("key1", 3);
 
-        assertThat(underTest.getSize()).isEqualTo(2);
+        assertThat(underTest.size()).isEqualTo(2);
     }
 
     @Test
@@ -85,11 +85,11 @@ class HashMapTest {
         underTest.put("key1", 1);
         underTest.put("key2", 2);
 
-        assertThat(underTest.getStoreSize()).isEqualTo(4);
+        assertThat(underTest.storeSize()).isEqualTo(4);
 
         underTest.put("key3", 3);
 
-        assertThat(underTest.getStoreSize()).isEqualTo(8);
+        assertThat(underTest.storeSize()).isEqualTo(8);
     }
 
     @Test
