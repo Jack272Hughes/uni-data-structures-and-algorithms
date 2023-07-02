@@ -10,7 +10,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ApplicationTest {
-    private static final String COSTS_FILE = "/component-test/costs.txt";
+    private static final String BASE_PATH = "src/test/resources";
+    private static final String COSTS_FILE = BASE_PATH + "/component-test/costs.txt";
 
     private Application underTest;
 
@@ -26,26 +27,26 @@ class ApplicationTest {
         // item6 should be ignored because its parent (item3) already has a cost
         expectedCosts.put("product", 121);
 
-        HashMap<Integer> actualCosts = underTest.calculateProductCosts("/component-test/valid", COSTS_FILE);
+        HashMap<Integer> actualCosts = underTest.calculateProductCosts(BASE_PATH + "/component-test/valid", COSTS_FILE);
         assertThat(actualCosts).isEqualTo(expectedCosts);
     }
 
     @Test
     void givenFileMissingCost_shouldThrowError() {
-        assertThatThrownBy(() -> underTest.calculateProductCosts("/component-test/missing-values", COSTS_FILE))
+        assertThatThrownBy(() -> underTest.calculateProductCosts(BASE_PATH + "/component-test/missing-values", COSTS_FILE))
                 .isInstanceOf(CostNotFoundException.class)
                 .hasMessage("Unable to find cost for item10");
     }
 
     @Test
     void givenParsingExceptionIsThrownByProductsParser_shouldPropagateError() {
-        assertThatThrownBy(() -> underTest.calculateProductCosts("/invalid", COSTS_FILE))
+        assertThatThrownBy(() -> underTest.calculateProductCosts(BASE_PATH + "/invalid", COSTS_FILE))
                 .isInstanceOf(ParsingException.class);
     }
 
     @Test
     void givenParsingExceptionIsThrownByCostsParser_shouldPropagateError() {
-        assertThatThrownBy(() -> underTest.calculateProductCosts("/component-test/valid", "/costs/invalid-value.txt"))
+        assertThatThrownBy(() -> underTest.calculateProductCosts(BASE_PATH + "/component-test/valid", BASE_PATH + "/costs/invalid-value.txt"))
                 .isInstanceOf(ParsingException.class);
     }
 }

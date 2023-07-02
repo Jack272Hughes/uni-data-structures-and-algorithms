@@ -7,9 +7,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Optional;
 import java.util.stream.Stream;
-
-import static java.util.Optional.ofNullable;
 
 public class ProductsParser {
     private static final String INDENT = "\\s{4}";
@@ -17,10 +16,10 @@ public class ProductsParser {
 
     public Node[] parse(String directoryName) {
         // Optionals used because some of these methods can return null values if files don't exist
-        File[] files = ofNullable(getClass().getResource(directoryName))
-                .map(resource -> new File(resource.getPath()))
+        File directory = new File(directoryName);
+        File[] files = Optional.of(directory)
                 .map(File::listFiles)
-                .orElseThrow(() -> new ParsingException("'" + directoryName + "' is not a valid directory"));
+                .orElseThrow(() -> new ParsingException("'" + directory.getAbsolutePath() + "' is not a valid directory"));
 
         return Stream.of(files)
                 .filter(file -> file.getName().endsWith(EXTENSION))
@@ -48,14 +47,14 @@ public class ProductsParser {
             lineNum++;
             if (line.isBlank()) continue;
 
-            // Remove trailing strings because we don't care about indents after the item name
+            // Remove trailing spaces because we don't care about indents after the item name
             String[] lineSplitByIndent = line.stripTrailing().split(INDENT, -1);
             int lineIndent = lineSplitByIndent.length - 1;
             String nodeName = lineSplitByIndent[lineIndent];
 
             if (lineIndent > indent) {
-                // Should only be allowed to go up one indent at a time and, if the first line of the file
-                // is indented, the product node would be the current node and would have no children yet
+                // Should only be allowed to go up one indent at a time, and the first line of
+                // the file can't be indented, as the current node's children would be empty
                 if (lineIndent != indent + 1 || currentNode.children().isEmpty()) {
                     throw new ParsingException("'" + productName + EXTENSION + "' has invalid indentation at line " + lineNum);
                 }

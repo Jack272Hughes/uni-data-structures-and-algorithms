@@ -11,6 +11,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class CostsParserTest {
+    private static final String BASE_PATH = "src/test/resources/costs";
+    private static final String CURRENT_DIR = System.getProperty("user.dir") + "/";
+
     private CostsParser underTest;
 
     @BeforeEach
@@ -24,7 +27,7 @@ class CostsParserTest {
         expectedMap.put("item0", 5);
         expectedMap.put("item1", 10);
 
-        HashMap<Integer> actualMap = underTest.parse("/costs/valid.txt");
+        HashMap<Integer> actualMap = underTest.parse(BASE_PATH + "/valid.txt");
         assertThat(actualMap).isEqualTo(expectedMap);
     }
 
@@ -35,23 +38,23 @@ class CostsParserTest {
         expectedMap.put("item1", 10);
         expectedMap.put("item2", 7);
 
-        HashMap<Integer> actualMap = underTest.parse("/costs/valid-spacing.txt");
+        HashMap<Integer> actualMap = underTest.parse(BASE_PATH + "/valid-spacing.txt");
         assertThat(actualMap).isEqualTo(expectedMap);
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"/costs/invalid-value.txt", "/costs/empty-value.txt"})
+    @ValueSource(strings = {"/invalid-value.txt", "/empty-value.txt"})
     void givenFileWithInvalidValue_shouldThrowException(String file) {
-        assertThatThrownBy(() -> underTest.parse(file))
+        assertThatThrownBy(() -> underTest.parse(BASE_PATH + file))
                 .isInstanceOf(ParsingException.class)
                 .hasMessage("Invalid cost value found at line 2");
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"/", "/null.txt"})
+    @ValueSource(strings = {"", "/null.txt"})
     void givenInvalidFile_shouldThrowException(String file) {
-        assertThatThrownBy(() -> underTest.parse(file))
+        assertThatThrownBy(() -> underTest.parse(BASE_PATH + file))
                 .isInstanceOf(ParsingException.class)
-                .hasMessage("'" + file + "' is not a valid file");
+                .hasMessage("'" + CURRENT_DIR + BASE_PATH + file + "' is not a valid file");
     }
 }

@@ -7,10 +7,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import static java.util.Optional.ofNullable;
 
 public class CostsParser {
     // This regex matches a string, an equals sign, then a numerical value
@@ -19,10 +18,10 @@ public class CostsParser {
     private static final Pattern KEY_VALUE_REGEX_PATTERN = Pattern.compile("^\\s*([\\w\\s]+?)\\s*=\\s*(\\d+)\\s*$");
 
     public HashMap<Integer> parse(String fileName) {
-        File costsFile = ofNullable(getClass().getResource(fileName))
-                .map(resource -> new File(resource.getPath()))
+        File file = new File(fileName);
+        File costsFile = Optional.of(file)
                 .filter(File::isFile)
-                .orElseThrow(() -> new ParsingException("'" + fileName + "' is not a valid file"));
+                .orElseThrow(() -> new ParsingException("'" + file.getAbsolutePath() + "' is not a valid file"));
 
         try (BufferedReader reader = new BufferedReader(new FileReader(costsFile))) {
             int lineNum = 0;

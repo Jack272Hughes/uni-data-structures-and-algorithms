@@ -14,7 +14,10 @@ public class Application {
     private final CostsParser costsParser = new CostsParser();
 
     public static void main(String[] args) {
-        HashMap<Integer> costs = new Application().calculateProductCosts("/products", "/costs.txt");
+        String productsDirectory = args[0];
+        String costsFile = args[1];
+
+        HashMap<Integer> costs = new Application().calculateProductCosts(productsDirectory, costsFile);
         System.out.println(costs);
     }
 
@@ -32,14 +35,16 @@ public class Application {
         return productCosts;
     }
 
-    private int calculateProduct(Node product, HashMap<Integer> costs) {
-        int currentTotal = 0;
+    public int calculateProduct(Node product, HashMap<Integer> costs) {
         LinkedStack<Node> nodesToCheck = new LinkedStack<>();
         nodesToCheck.add(product);
 
+        int currentTotal = 0;
         while (!nodesToCheck.isEmpty()) {
             Node node = nodesToCheck.pop().orElseThrow();
 
+            // If an item has an associated cost it should
+            // not include its children's cost in the total
             Optional<Integer> optionalCost = costs.get(node.name());
             if (optionalCost.isPresent()) {
                 currentTotal += optionalCost.get();

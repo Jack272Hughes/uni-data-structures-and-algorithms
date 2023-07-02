@@ -12,6 +12,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ProductsParserTest {
+    private static final String BASE_PATH = "src/test/resources";
+    private static final String CURRENT_DIR = System.getProperty("user.dir") + "/";
+
     private ProductsParser underTest;
 
     @BeforeEach
@@ -31,7 +34,7 @@ class ProductsParserTest {
         nodes[2].addChild(nodes[3]);
         nodes[4].addChild(nodes[5]);
 
-        Node[] parsedNodes = underTest.parse("/single");
+        Node[] parsedNodes = underTest.parse(BASE_PATH + "/single");
         assertThat(parsedNodes).containsExactly(expectedProduct);
     }
 
@@ -50,7 +53,7 @@ class ProductsParserTest {
         secondExpectedProduct.addChild(nodes[2]);
         nodes[0].addChild(nodes[1]);
 
-        Node[] parsedNodes = underTest.parse("/multiple");
+        Node[] parsedNodes = underTest.parse(BASE_PATH + "/multiple");
         assertThat(parsedNodes).containsExactlyInAnyOrder(firstExpectedProduct, secondExpectedProduct);
     }
 
@@ -63,28 +66,28 @@ class ProductsParserTest {
         nodes[0].addChild(nodes[1]);
         nodes[0].addChild(nodes[2]);
 
-        Node[] parsedNodes = underTest.parse("/spacing");
+        Node[] parsedNodes = underTest.parse(BASE_PATH + "/spacing");
         assertThat(parsedNodes).containsExactly(expectedProduct);
     }
 
     @Test
     void givenIncorrectFileExtension_shouldIgnoreFile() {
-        Node[] parsedNodes = underTest.parse("/ignore");
+        Node[] parsedNodes = underTest.parse(BASE_PATH + "/ignore");
         assertThat(parsedNodes).isEmpty();
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"/invalid", "/null"})
     void givenInvalidDirectory_shouldThrowException(String directory) {
-        assertThatThrownBy(() -> underTest.parse(directory))
+        assertThatThrownBy(() -> underTest.parse(BASE_PATH + directory))
                 .isInstanceOf(ParsingException.class)
-                .hasMessage("'" + directory + "' is not a valid directory");
+                .hasMessage("'" + CURRENT_DIR + BASE_PATH + directory + "' is not a valid directory");
     }
 
     @ParameterizedTest
     @CsvSource({"/spaced-invalid-indent, 3", "/invalid-start-indent, 1"})
     void givenFileWithInvalidIndentation_shouldThrowException(String directory, int expectedLineNumber) {
-        assertThatThrownBy(() -> underTest.parse(directory))
+        assertThatThrownBy(() -> underTest.parse(BASE_PATH + directory))
                 .isInstanceOf(ParsingException.class)
                 .hasMessage("'test.txt' has invalid indentation at line " + expectedLineNumber);
     }
